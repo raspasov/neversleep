@@ -157,6 +157,6 @@
   (server-start))
 
 ;TODO remove when building uberjar
-(-main)
+;(-main)
 
 
