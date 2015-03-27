@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "Going to install neversleep-db...";
+echo "Stopping current neversleep-db service if one is running...";
+service neversleep-db stop;
+if id -u "neversleep-db" >/dev/null 2>&1; then
+        echo "neversleep-db user already exists"
+else
+        useradd "neversleep-db"
+fi

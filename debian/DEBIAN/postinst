@@ -1,0 +1,19 @@
+#!/bin/bash
+echo "Setting file permissions..."
+# DATA DIR
+chown -R neversleep-db:neversleep-db /usr/lib/neversleep-db;
+chmod -R 744 /usr/lib/neversleep-db;
+# Move config if previous one does not exist
+cp -n /etc/neversleep-db/config-original.clj /etc/neversleep-db/config.clj
+cp -n /etc/neversleep-db/jvm-config-original /etc/neversleep-db/jvm-config
+# CONFIG DIR
+chown -R neversleep-db:neversleep-db /etc/neversleep-db;
+chmod -R 755 /etc/neversleep-db;
+# LOG
+chown -R neversleep-db:neversleep-db /var/log/neversleep-db;
+chmod -R 755 /var/log/neversleep-db;
+# DOC DIR
+chown -R neversleep-db:neversleep-db /usr/share/doc/neversleep-db;
+chmod -R 755 /usr/share/doc/neversleep-db;
+echo "Configure using /etc/neversleep-db/config.clj; 'sudo service neversleep-db start' to start the database";
+

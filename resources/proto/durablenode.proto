@@ -1,0 +1,83 @@
+package Durablenode;
+
+option java_package = "com.durablenode";
+
+message ValNode {
+
+    required bytes value = 1;
+    required int32 uuid = 2;
+
+}
+
+message BitmapIndexedNode {
+
+    required int32 bitmap = 1;
+    repeated bytes array = 2;
+    required int32 uuid = 3;
+}
+
+message ArrayNode {
+    required int32 cnt    = 1;
+    repeated bytes array  = 2;
+    required int32 uuid = 3;
+}
+
+message HashCollisionNode {
+    required int32 nodehash = 1;
+    required int32 cnt    = 2;
+    repeated bytes array  = 3;
+    required int32 uuid = 4;
+}
+
+message BtreeInnerNode {
+    repeated bytes array  = 1;
+    required int32 uuid = 2;
+}
+
+message BtreeLeafNode {
+    repeated bytes array  = 1;
+    required int32 uuid = 2;
+    optional bytes leftpointer = 3;
+}
+
+
+message MapRoot {
+
+    required int64 cnt = 1;
+    required bytes root = 2;
+
+}
+
+message BtreeRoot {
+
+    required int64 cnt = 1;
+    required bytes root = 2;
+
+}
+
+message Blob {
+    required bytes index = 1;
+    repeated BitmapIndexedNode pdmbitmapnodes = 2;
+    repeated ArrayNode pdmarraynodes = 3;
+    repeated HashCollisionNode pdmcollisionnodes = 4;
+    repeated ValNode pdmvalnodes = 5;
+    repeated BtreeLeafNode btreeleafnodes = 6;
+    repeated BtreeInnerNode btreeinnernodes = 7;
+}
+
+
+message BtreeRootLogEntry {
+
+    required BtreeRoot root = 1;
+    required MapRoot lastentityroot = 2;
+    required string entity = 3;
+    //1 - pdMap, 2 - pdVector, etc
+    required int32 entitytype = 4;
+
+}
+
+message CommandLogEntry {
+    required int32 entitytype = 1;
+    required string command = 2;
+    required bytes params = 3;
+}
