@@ -1,2 +1,2 @@
 #! /bin/bash
-JVM_OPTIONS="-Xms256m -Xmx256m -XX:+UseG1GC -XX:+UseFastAccessorMethods -XX:+AggressiveOpts"
+JVM_OPTIONS="-Xms1g -Xmx1g -XX:+UseG1GC -XX:+UseFastAccessorMethods -XX:+AggressiveOpts"
