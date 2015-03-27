@@ -9,7 +9,7 @@ NeverSleep is an immutable data structure server, written in Clojure
 
 Tested on Ubuntu 14.04 LTS
 
-#### Install
+#### Install, configure and run
 Make sure you have the latest version of **Java 8**:
 
 ```sh
@@ -25,8 +25,6 @@ Download and install NeverSleep:
 $ wget https://s3-us-west-2.amazonaws.com/neversleep/neversleep-1.0.0-alpha1.deb
 $ sudo dpkg -i neversleep-1.0.0-alpha1.deb
 ```
-
-#### Configure and run
 NeverSleep uses third party storage backends to store your data. **MySQL** is the only one currently supported (DynamoDB and other SQL-compatible servers are **coming soon**).
 
 1. Edit **/etc/neversleep-db/config.clj** to configure **MySQL** - specify your own **:host**, **:port**, **:database-name**, **:user** and **:password**
