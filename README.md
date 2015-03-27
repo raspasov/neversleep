@@ -25,7 +25,7 @@ $ wget https://s3-us-west-2.amazonaws.com/neversleep/neversleep-1.0.0-alpha1.deb
 $ sudo dpkg -i neversleep-1.0.0-alpha1.deb
 ```
 
-NeverSleep uses third party storage backends to store your data.
+NeverSleep uses third party storage backends to store your data.  
 Currently there's support only for **MySQL** (DynamoDB and other SQL-compatible servers are **coming soon**).
 
 1. Edit **/etc/neversleep-db/config.clj** to configure **MySQL** - specify your own :host, :port, :database-name, :user and :password
