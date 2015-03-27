@@ -12,6 +12,7 @@ pom.xml.asc
 .idea
 *.iml
 *.nvrslpd
+*.nvrslp
 *.bptrl
 *.cmdl
 *.swp

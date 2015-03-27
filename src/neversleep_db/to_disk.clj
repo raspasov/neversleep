@@ -62,7 +62,7 @@
   "Safety check on server startup"
   [last-saved-blob-id confirm-ch]
   (try
-    (let [file-path (str (env/data-dir) "blob_id/value")
+    (let [file-path (str (env/data-dir) "blob_id/value.nvrslp")
           value-file (clojure.java.io/as-file file-path)
           current-blob-id (if (.exists value-file)
                             ;file exists
@@ -82,7 +82,7 @@
   [confirm-ch]
   (send-off allocate-next-blob-id-agent
             (fn [_]
-              (let [file-path (str (env/data-dir) "blob_id/value")
+              (let [file-path (str (env/data-dir) "blob_id/value.nvrslp")
                     current-blob-id (util/parse-long (slurp file-path))
                     next-blob-id (+ 1 current-blob-id)]
                 (spit file-path next-blob-id)
