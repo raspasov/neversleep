@@ -33,10 +33,10 @@ $ sudo service neversleep-db start
 
 ## Usage
 
-- [NeverSleep Clojure Library](https://github.com/raspasov/neversleep-clojure-client)
-- [NeverSleep PHP Library](https://github.com/raspasov/neversleep-php-client)
+- [NeverSleep Clojure Client Library](https://github.com/raspasov/neversleep-clojure-client)
+- [NeverSleep PHP Client Library](https://github.com/raspasov/neversleep-php-client)
 
 ## License
 
-Copyright © 2014 Rangel Spasov
+Copyright © 2015 Rangel Spasov
 
