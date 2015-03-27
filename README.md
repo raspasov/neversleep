@@ -1,5 +1,6 @@
-# NeverSleep - immutable data structure server
+# NeverSleep
 
+NeverSleep is an immutable data structure server, written in Clojure
 
 
 ## Getting started
