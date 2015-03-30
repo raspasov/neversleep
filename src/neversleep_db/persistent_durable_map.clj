@@ -1029,7 +1029,7 @@
               ;wait for io-assoc save-map!
               (<! bpt-in-mem-confirm-ch)
               ;send ok to the API
-              (>! confirm-ch (confirm-ch-modifier-fn {:timestamp (str timestamp)})))
+              (>! confirm-ch (confirm-ch-modifier-fn {:result {:timestamp (str timestamp)}})))
           ;initiate a new map if one doesn't already exist
           {:keys [cnt ^bytes root] :as io-map} (if-let [map-current (get-map-current! entity-id)]
                                                  ;map already exists, return it
@@ -1082,7 +1082,7 @@
                   ;wait for io-assoc save-map!
                   (<! bpt-in-mem-confirm-ch)
                   ;send ok to the API
-                  (>! confirm-ch (confirm-ch-modifier {:timestamp (str timestamp)})))
+                  (>! confirm-ch (confirm-ch-modifier {:result {:timestamp (str timestamp)}})))
               node-collector (new-node-collector)
               new-root (n-without-dispatcher root (int 0) (hash key) key node-collector blob-id entity-id)
               io-map (if (node-equiv? root new-root)

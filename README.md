@@ -30,7 +30,7 @@ NeverSleep uses third party storage backends to store your data. **MySQL** is th
 1. Edit **/etc/neversleep-db/config.clj** to configure **MySQL** - specify your own **:host**, **:port**, **:database-name**, **:user** and **:password**
 2. In the database that you specified under **:database-name**, import **[those tables](https://github.com/raspasov/neversleep/blob/d5cafea8b995396d1d120576c0c7ed1f658b753d/mysql-schema.sql)**
 
-Optionally (but strongly recommended), edit **/etc/neversleep-db/jvm-config** to specify your JVM heap size; **Xms** and **Xmx** values are strongly recommended to be the same. The default JVM heap size specified in jvm-config is 256MB.
+Optionally (but strongly recommended), edit **/etc/neversleep-db/jvm-config** to specify your JVM heap size; **Xms** and **Xmx** values are strongly recommended to be the same. The default JVM heap size specified in jvm-config is 256MB. Heap of at least 3GB is recommended for production.
 
 
 Ready to go? Start the server:

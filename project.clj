@@ -1,8 +1,8 @@
 (defproject neversleep-db "1.0.0-alpha1"
             :description "We choose to go the moon not because it's easy but because it's hard"
-            :url "http://example.com/FIXME"
-            :license {:name "Eclipse Public License"
-                      :url  "http://www.eclipse.org/legal/epl-v10.html"}
+            :url "https://github.com/raspasov/neversleep"
+            :license {:name "GNU AFFERO GENERAL PUBLIC LICENSE"
+                      :url  "https://www.gnu.org/licenses/agpl-3.0.html"}
             :java-source-paths ["src/jv"]
             :dependencies [
 

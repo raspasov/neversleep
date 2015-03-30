@@ -9,8 +9,8 @@
 
 
 ;(def client-opts
-;  {:access-key "AKIAIYWYXT67YSBLYW7A"  ; For DynamoDB Local, just put some random string
-;   :secret-key "BC6O8YFed8VQPSMnSPLRjm/AsO+YBpq7Rmh86ta1" ; For production, put your IAM keys here
+;  {:access-key ""  ; For DynamoDB Local, just put some random string
+;   :secret-key "" ; For production, put your IAM keys here
 ;   })
 ;
 ;(far/list-tables client-opts)

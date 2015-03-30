@@ -156,7 +156,6 @@
       ;all key-vals for one entity
       (let [^APersistentVector key-vals (into [] (mapcat (juxt :timestamp :io-map) vector-of-maps))]
         ;write key-vals for each entity in a b-plus-tree, chan receives all the nodes changed
-        ;(future)
         (bpt-b/io-assoc (:entity-id entity-info) (:entity-type entity-info) key-vals blob-id b-tree-node-collector-ch b-tree-root-ch)))
     [b-tree-node-collector-ch b-tree-root-ch]))
 
