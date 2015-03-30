@@ -47,9 +47,15 @@
       (handler (wrap-duplex-stream protocol-server s) info))
     {:port port}))
 
-(defn ch-modifier [{:keys [request-uuid]}]
-  (comp #(util/encode %)
-        #(merge % {:request-uuid request-uuid})))
+(defn ch-modifier [{:keys [request-uuid language]}]
+  ;determine if we're responding to Clojure or another language
+  (if (= (byte 0) language)
+    ;nippy serialization for Clojure
+    (comp #(util/serialize %)
+          #(merge % {:request-uuid request-uuid}))
+    ;else - json
+    (comp #(util/encode %)
+          #(merge % {:request-uuid request-uuid}))))
 
 (defn send-to-api [stream-in-ch stream-out-ch]
   (go
@@ -67,7 +73,7 @@
                 (recur))
               ;parsing was OK
               (instance? APersistentMap p)
-              (let [{:keys [command request-uuid entity-id key val timestamp]} p
+              (let [{:keys [command request-uuid entity-id key val timestamp language]} p
                     timestamp (if timestamp (util/parse-timestamp timestamp))
                     request-uuid (str request-uuid)]
                 (condp = command
@@ -76,29 +82,29 @@
                   ;io-assoc json
                   (byte 0)
                   (do
-                    (write-dispatch/io-pdm-write pdm/io-assoc entity-id key val stream-out-ch (ch-modifier {:request-uuid request-uuid}))
+                    (write-dispatch/io-pdm-write pdm/io-assoc entity-id key val stream-out-ch (ch-modifier {:request-uuid request-uuid :language language}))
                     (recur))
                   ;io-assoc
                   (byte 1)
                   (do
-                    (write-dispatch/io-pdm-write pdm/io-assoc entity-id key val stream-out-ch (ch-modifier {:request-uuid request-uuid}))
+                    (write-dispatch/io-pdm-write pdm/io-assoc entity-id key val stream-out-ch (ch-modifier {:request-uuid request-uuid :language language}))
                     (recur))
                   ;io-dissoc
                   (byte 2)
                   (do
-                    (write-dispatch/io-pdm-write pdm/io-without entity-id key nil stream-out-ch (ch-modifier {:request-uuid request-uuid}))
+                    (write-dispatch/io-pdm-write pdm/io-without entity-id key nil stream-out-ch (ch-modifier {:request-uuid request-uuid :language language}))
                     (recur))
                   ;io-assoc-in json
                   (byte 3)
                   (do
                     ;conj the entity key to the end of the deep-key vector
-                    (write-dispatch/io-pdm-write pdm/io-assoc-in-json entity-id (conj (:deep-key p) key) val stream-out-ch (ch-modifier {:request-uuid request-uuid}))
+                    (write-dispatch/io-pdm-write pdm/io-assoc-in-json entity-id (conj (:deep-key p) key) val stream-out-ch (ch-modifier {:request-uuid request-uuid :language language}))
                     (recur))
                   ;io-dissoc-in json
                   (byte 4)
                   (do
                     ;conj the entity key to the end of the deep-key vector
-                    (write-dispatch/io-pdm-write pdm/io-dissoc-in-json entity-id (conj (:deep-key p) key) nil stream-out-ch (ch-modifier {:request-uuid request-uuid}))
+                    (write-dispatch/io-pdm-write pdm/io-dissoc-in-json entity-id (conj (:deep-key p) key) nil stream-out-ch (ch-modifier {:request-uuid request-uuid :language language}))
                     (recur))
                   ;READS
                   ;=============
@@ -106,13 +112,13 @@
                   (byte -128)
                   (do
                     (>! @state/read-pipeline-from-ch
-                        #(read-dispatch/io-find-as-of! entity-id key timestamp stream-out-ch (ch-modifier {:request-uuid request-uuid})))
+                        #(read-dispatch/io-find-as-of! entity-id key timestamp stream-out-ch (ch-modifier {:request-uuid request-uuid :language language})))
                     (recur))
                   ;io-get-entity
                   (byte -127)
                   (do
                     (>! @state/read-pipeline-from-ch
-                        #(read-dispatch/io-get-entity-as-of! entity-id timestamp stream-out-ch (ch-modifier {:request-uuid request-uuid})))
+                        #(read-dispatch/io-get-entity-as-of! entity-id timestamp stream-out-ch (ch-modifier {:request-uuid request-uuid :language language})))
                     (recur))
                   ;io-get-all-versions-between
                   (byte -126)
@@ -120,16 +126,16 @@
                     (>! @state/read-pipeline-from-ch
                         #(read-dispatch/io-get-all-versions-between!
                           entity-id (util/parse-timestamp (:timestamp-start p)) (util/parse-timestamp (:timestamp-end p)) (:limit p)
-                          stream-out-ch (ch-modifier {:request-uuid request-uuid})))
+                          stream-out-ch (ch-modifier {:request-uuid request-uuid :language language})))
                     (recur))
                   ;else
                   (do
-                    (>! stream-out-ch (util/encode {:error "Unknown API command"}))
+                    (>! stream-out-ch ((ch-modifier {:request-uuid request-uuid :language language}) {:error "Unknown API command"}))
                     (recur))))
               ;in any other case we have unrecognized data, return error
               :else
               (do
-                (>! stream-out-ch (util/encode {:error "Unrecognized data structure during parsing in aleph-netty/send-to-api"}))
+                (>! stream-out-ch ((ch-modifier {:request-uuid ""}) {:error "Unrecognized data structure during parsing in aleph-netty/send-to-api"}))
                 (recur)))))))))
 
 (defn tcp-api-handler

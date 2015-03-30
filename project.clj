@@ -75,6 +75,8 @@
                            ]
             ;:global-vars {*warn-on-reflection* true *unchecked-math* :warn-on-boxed}
 
+            :javac-options ["-target" "1.6" "-source" "1.6"]
+
             :plugins [[lein-environ "1.0.0"]
                       [lein-rpm "0.0.5"]
                       [lein-protobuf "0.4.2-LOCAL"]]

@@ -208,25 +208,27 @@
 
 (defn parse-byte-vector [^APersistentVector byte-vector]
   ;first byte determines the command
-  (let [api-version (nth byte-vector 0)
-        command (nth byte-vector 1)
-        ;slice off the version byte
-        byte-vector (subvec byte-vector 1)]
-    (condp = command
-      ;io-assoc any type
-      (byte 1) (io-assoc-parse command byte-vector)
-      ;io-dissoc
-      (byte 2) (io-dissoc-parse command byte-vector)
-      ;io-assoc-in json
-      (byte 3) (io-assoc-in-json-parse command byte-vector)
-      ;io-dissoc-in json
-      (byte 4) (io-dissoc-in-json-parse command byte-vector)
-      ;io-get-key-as-of
-      (byte -128) (io-get-key-as-of-parse command byte-vector)
-      ;io-get-entity-as-of
-      (byte -127) (io-get-entity-as-of-parse command byte-vector)
-      ;io-get-all-version-between
-      (byte -126) (io-get-all-version-between-parse command byte-vector)
-      ;else - command not recognized
-      {})))
+  (let [language (nth byte-vector 0)
+        api-version (nth byte-vector 1)
+        command (nth byte-vector 2)
+        ;slice off language, version byte
+        byte-vector (subvec byte-vector 2)]
+    (merge {:language language :api-version api-version}
+           (condp = command
+             ;io-assoc any type
+             (byte 1) (io-assoc-parse command byte-vector)
+             ;io-dissoc
+             (byte 2) (io-dissoc-parse command byte-vector)
+             ;io-assoc-in json
+             (byte 3) (io-assoc-in-json-parse command byte-vector)
+             ;io-dissoc-in json
+             (byte 4) (io-dissoc-in-json-parse command byte-vector)
+             ;io-get-key-as-of
+             (byte -128) (io-get-key-as-of-parse command byte-vector)
+             ;io-get-entity-as-of
+             (byte -127) (io-get-entity-as-of-parse command byte-vector)
+             ;io-get-all-version-between
+             (byte -126) (io-get-all-version-between-parse command byte-vector)
+             ;else - command not recognized
+             {}))))
 
