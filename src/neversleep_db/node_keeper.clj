@@ -294,12 +294,14 @@
                                (do
                                  (let [pdm-node-seqs (->> vector-of-node-collector-maps
                                                           (map :node-collector)
-                                                          (reduce (fn [[b a h v] [-b -a -h -v]]
-                                                                    [(concat b -b) (concat a -a) (concat h -h) (concat v -v)])))
+                                                          #_(reduce (fn [[b a h v] [-b -a -h -v]]
+                                                                    [(concat b -b) (concat a -a) (concat h -h) (concat v -v)]))
+                                                          (apply mapv concat))
                                        b-tree-node-seqs (->> (get group-b-tree-node-collector-ch entity-id)
                                                              (map :node-collector)
-                                                             (reduce (fn [[l i] [-l -i]]
-                                                                       [(concat l -l) (concat i -i)])))
+                                                             #_(reduce (fn [[l i] [-l -i]]
+                                                                       [(concat l -l) (concat i -i)]))
+                                                             (apply mapv concat))
                                        internal-blob-index (build-internal-blob-index {:pdmbitmapnodes    (nth pdm-node-seqs 0)
                                                                                        :pdmarraynodes     (nth pdm-node-seqs 1)
                                                                                        :pdmcollisionnodes (nth pdm-node-seqs 2)

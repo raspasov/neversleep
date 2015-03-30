@@ -163,13 +163,14 @@
   (let [entity-id "users"
         num-of-writes 10000
         key-val-data (-> num-of-writes (random-data) (key-val-data))
-        _ (println-m "about to enter N distintct key/vals:" (count key-val-data))
+        _ (println-m "about to enter N distinct key/vals:" (count key-val-data))
         _ (Thread/sleep 1000)
         _ (doseq [[k v] key-val-data]
             (let [responce-ch (chan 1)]
               (write-dispatch/io-pdm-write pdm/io-assoc entity-id k v responce-ch)
               ;try to read the write immediately after
-              (let [{:keys [timestamp]} (<!! responce-ch)
+              (let [{:keys [timestamp] :as responce-data} (:result (<!! responce-ch))
+                    ;_ (println "RESPONCE-DATA::" responce-data)
                     ;wait for responce, save it
                     result (-> (read-dispatch/io-find-as-of! entity-id k (util/parse-timestamp timestamp))
                                (<!!)
