@@ -1,6 +1,7 @@
 # NeverSleep
 
 NeverSleep is an immutable data structure server, written in Clojure
+This is Alpha level software, use with care!
 
 
 ## Getting started
@@ -42,7 +43,6 @@ $ sudo service neversleep-db start
 ## Usage
 
 - [NeverSleep Clojure Client Library](https://github.com/raspasov/neversleep-clojure-client)
-- [NeverSleep PHP Client Library](https://github.com/raspasov/neversleep-php-client)
 
 ## License
 
