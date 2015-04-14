@@ -8,7 +8,7 @@
 
                            ;[org.clojure/clojure "1.6.0"]
                            ;stay on the edge
-                           [org.clojure/clojure "1.7.0-alpha6"]
+                           [org.clojure/clojure "1.7.0-beta1"]
                            [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                            [aprint "0.1.0"]
 

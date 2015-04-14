@@ -11,7 +11,6 @@
            [neversleep-db.exception-log :as exception-log]
            [neversleep-db.serializer :as serializer])
   (:import (clojure.lang Atom APersistentMap)
-           (com.google.protobuf ByteString)
            com.durablenode.Durablenode$BtreeLeafNode
            com.durablenode.Durablenode$BtreeInnerNode))
 
