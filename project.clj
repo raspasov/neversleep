@@ -8,13 +8,13 @@
 
                            ;[org.clojure/clojure "1.6.0"]
                            ;stay on the edge
-                           [org.clojure/clojure "1.7.0-beta1"]
+                           [org.clojure/clojure "1.7.0-RC1"]
                            [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                            [aprint "0.1.0"]
 
-                           [aleph "0.4.0-beta3"]
+                           [aleph "0.4.0"]
                            ;serialization
-                           [com.taoensso/nippy "2.8.0"]
+                           [com.taoensso/nippy "2.9.0"]
                            ;data compression
                            [cc.qbits/nippy-lz4 "0.1.0"]
                            ;protocol buffers
@@ -24,7 +24,7 @@
                            [com.taoensso/timbre "3.4.0"]
 
                            ;mysql
-                           [org.clojure/java.jdbc "0.3.6"]
+                           [org.clojure/java.jdbc "0.3.7"]
                            [mysql/mysql-connector-java "5.1.31"]
                            [com.jolbox/bonecp "0.8.0.RELEASE"]
 

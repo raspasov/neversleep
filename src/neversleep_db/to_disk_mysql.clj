@@ -1,6 +1,5 @@
 (ns neversleep-db.to-disk-mysql
   (:require [neversleep-db.mysql-lib :as mysql-lib]
-            [flatland.protobuf.core :as proto]
             [neversleep-db.println-m :refer [println-m]]
             [neversleep-db.to-disk-utils :as to-disk-utils]
             [criterium.core :as criterium]
@@ -8,7 +7,6 @@
             [clojure.core.async :refer [chan timeout go <! <!! >!! >! go-loop put! thread alts!! alts! dropping-buffer pipeline-blocking]])
   (:import com.durablenode.Durablenode$BtreeRootLogEntry))
 
-(def BtreeRootLogEntryProtoDef (proto/protodef Durablenode$BtreeRootLogEntry))
 
 ;STORAGE ENGINE-SPECIFIC FNs
 (defn save-blob-chunk [blob-id part entity-id data]
